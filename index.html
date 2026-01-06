@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <title>Kanban de Tasques</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/estils.css">
+</head>
+<body>
+
+<header>
+  <h1>Kanban de Tasques</h1>
+</header>
+
+<main>
+  <!-- Zona de formulari -->
+  <aside>
+    <h2>Crear / Editar Tasca</h2>
+    <form id="taskForm">
+      <label>Títol *
+        <input type="text" id="titol" required>
+      </label>
+      <label>Descripció
+        <textarea id="descripcio"></textarea>
+      </label>
+      <label>Prioritat
+        <select id="prioritat">
+          <option value="baixa">Baixa</option>
+          <option value="mitjana">Mitjana</option>
+          <option value="alta">Alta</option>
+        </select>
+      </label>
+      <label>Data límit
+        <input type="date" id="dataVenciment">
+      </label>
+      <button type="submit">Desar tasca</button>
+    </form>
+  </aside>
+
+  <!-- Zona de filtres i cerca -->
+  <section class="filters">
+    <h2>Filtres i Cerca</h2>
+    <label>Filtrar per Estat
+      <select id="filterEstat">
+        <option value="">Tots</option>
+        <option value="perFer">Per fer</option>
+        <option value="enCurs">En curs</option>
+        <option value="fet">Fet</option>
+      </select>
+    </label>
+    <label>Filtrar per Prioritat
+      <select id="filterPrioritat">
+        <option value="">Totes</option>
+        <option value="baixa">Baixa</option>
+        <option value="mitjana">Mitjana</option>
+        <option value="alta">Alta</option>
+      </select>
+    </label>
+    <label>Cerca per text
+      <input type="text" id="searchText" placeholder="Cerca títol o descripció">
+    </label>
+  </section>
+
+  <!-- Tauler Kanban -->
+  <section class="kanban">
+    <section class="columna" data-estat="perFer">
+      <h3>Per fer</h3>
+      <div class="tasques"></div>
+    </section>
+
+    <section class="columna" data-estat="enCurs">
+      <h3>En curs</h3>
+      <div class="tasques"></div>
+    </section>
+
+    <section class="columna" data-estat="fet">
+      <h3>Fet</h3>
+      <div class="tasques"></div>
+    </section>
+  </section>
+</main>
+
+<footer>
+  <p>Pràctica Kanban - DAW</p>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>
