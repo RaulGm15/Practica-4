@@ -32,7 +32,9 @@ function renderTasques() {
   kanbanColEnCurs.innerHTML = "";
   kanbanColFet.innerHTML = "";
 
-  tasques.forEach(tasca => {
+  const tasquesAMostrar = getTasquesFiltrades();
+
+  tasquesAMostrar.forEach(tasca => {
     const div = document.createElement("div");
     div.classList.add("tasca");
     div.dataset.id = tasca.id;
@@ -60,7 +62,10 @@ function renderTasques() {
     else if (tasca.estat === "enCurs") kanbanColEnCurs.appendChild(div);
     else kanbanColFet.appendChild(div);
   });
+
+  actualitzarEstadistiques();
 }
+
 
 // ---------- Crear / Editar ----------
 form.addEventListener("submit", e => {
@@ -135,3 +140,57 @@ document.addEventListener("DOMContentLoaded", () => {
   tasques = carregarTasques();
   renderTasques();
 });
+
+// Selección de elementos del DOM de los nuevos elementos de filter
+const filterEstat = document.querySelector("#filterEstat");
+const filterPrioritat = document.querySelector("#filterPrioritat");
+const searchText = document.querySelector("#searchText");
+
+const totalTasquesSpan = document.querySelector("#totalTasques");
+const totalPerFerSpan = document.querySelector("#totalPerFer");
+const totalEnCursSpan = document.querySelector("#totalEnCurs");
+const totalFetSpan = document.querySelector("#totalFet");
+const percentCompletadesSpan = document.querySelector("#percentCompletades");
+
+function getTasquesFiltrades() {
+  let filtrades = [...tasques];
+
+  // Filtrar por estat
+  if (filterEstat.value) {
+    filtrades = filtrades.filter(t => t.estat === filterEstat.value);
+  }
+
+  // Filtrar por prioritat
+  if (filterPrioritat.value) {
+    filtrades = filtrades.filter(t => t.prioritat === filterPrioritat.value);
+  }
+
+  // Buscar por texto
+  if (searchText.value.trim() !== "") {
+    const text = searchText.value.toLowerCase();
+    filtrades = filtrades.filter(t => 
+      t.titol.toLowerCase().includes(text) || 
+      t.descripcio.toLowerCase().includes(text)
+    );
+  }
+
+  return filtrades;
+}
+
+function actualitzarEstadistiques() {
+  const total = tasques.length;
+  const perFer = tasques.filter(t => t.estat === "perFer").length;
+  const enCurs = tasques.filter(t => t.estat === "enCurs").length;
+  const fet = tasques.filter(t => t.estat === "fet").length;
+  const percent = total === 0 ? 0 : Math.round((fet / total) * 100);
+
+  totalTasquesSpan.textContent = total;
+  totalPerFerSpan.textContent = perFer;
+  totalEnCursSpan.textContent = enCurs;
+  totalFetSpan.textContent = fet;
+  percentCompletadesSpan.textContent = percent;
+}
+
+filterEstat.addEventListener("change", renderTasques);
+filterPrioritat.addEventListener("change", renderTasques);
+searchText.addEventListener("input", renderTasques);
