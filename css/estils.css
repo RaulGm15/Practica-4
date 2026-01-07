@@ -28,3 +28,37 @@ button { margin-top: 1rem; }
 }
 
 .tasques { min-height: 100px; }
+
+/* ===========================
+   RESPONSIVE - MOBILE
+=========================== */
+@media (max-width: 768px) {
+
+  main {
+    flex-direction: column;
+  }
+
+  aside {
+    width: 100%;
+  }
+
+  .filters {
+    width: 100%;
+  }
+
+  .kanban {
+    flex-direction: column;
+  }
+
+  .columna {
+    width: 100%;
+  }
+}
+
+.tasca {
+  background: white;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
